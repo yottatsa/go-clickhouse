@@ -37,6 +37,7 @@ func (s *connSuite) TestQuery() {
 				parseDate("2011-03-06"), parseDateTime("2011-03-06 06:20:00"), "one"}},
 		},
 	}
+
 	for _, tc := range testCases {
 		rows, err := s.conn.Query(tc.query, tc.args...)
 		if !s.NoError(err) {
@@ -51,6 +52,7 @@ func (s *connSuite) TestQuery() {
 				s.Equal(tc.expected, v)
 			}
 		}
+		rows.Close()
 	}
 }
 
@@ -97,6 +99,7 @@ func (s *connSuite) TestExec() {
 		if s.NoError(err) {
 			s.Equal([][]interface{}{tc.args}, v)
 		}
+		s.NoError(rows.Close())
 	}
 }
 
